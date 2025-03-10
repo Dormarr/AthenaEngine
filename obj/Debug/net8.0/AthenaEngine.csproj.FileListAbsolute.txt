@@ -30,3 +30,6 @@
 /Users/ryanappleyard/Desktop/Source/AthenaEngine/obj/Debug/net8.0/AthenaEngine.pdb
 /Users/ryanappleyard/Desktop/Source/AthenaEngine/obj/Debug/net8.0/AthenaEngine.genruntimeconfig.cache
 /Users/ryanappleyard/Desktop/Source/AthenaEngine/obj/Debug/net8.0/ref/AthenaEngine.dll
+/Users/ryanappleyard/Desktop/Source/AthenaEngine/obj/Debug/net8.0/AthenaEngine.sourcelink.json
+/Users/ryanappleyard/Desktop/Source/AthenaEngine/bin/Debug/net8.0/Shaders/fragmentShader.frag
+/Users/ryanappleyard/Desktop/Source/AthenaEngine/bin/Debug/net8.0/Shaders/vertexShader.vert

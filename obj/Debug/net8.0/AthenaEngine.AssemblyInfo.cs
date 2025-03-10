@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AthenaEngine")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+51fe3597d55567d30d2d45bbc4e5f6bcb858f2b5")]
 [assembly: System.Reflection.AssemblyProductAttribute("AthenaEngine")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AthenaEngine")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
