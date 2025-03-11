@@ -1,3 +1,5 @@
+using System;
+
 namespace AthenaEngine.Source.Utility;
 
 public struct Vector3
