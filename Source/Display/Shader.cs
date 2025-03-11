@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
 
 namespace AthenaEngine.Source
@@ -57,5 +58,12 @@ namespace AthenaEngine.Source
                 throw new Exception($"ERROR: {type} SHADER COMPILATION FAILED\n{infoLog}");
             }
         }
+        
+        public void SetMatrix4(string name, Matrix4 matrix)
+        {
+            int location = GL.GetUniformLocation(Handle, name);
+            GL.UniformMatrix4(location, false, ref matrix);
+        }
+
     }
 }
