@@ -39,7 +39,7 @@ public class ProofWindow : GameWindow
         );
 
         // --- Tilemap ---
-        _tilemap = new Tilemap(8, 8); // small 8x8 grid
+        _tilemap = new Tilemap(16, 16); // small 8x8 grid
     }
 
     protected override void OnRenderFrame(FrameEventArgs args)
