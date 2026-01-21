@@ -1,39 +1,49 @@
 using System;
-using System.Diagnostics;
 using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 using AthenaEngine.Source.Utility;
 
 namespace AthenaEngine.Source.Terrain;
 
-public class Tilemap
+public class Tilemap : IDisposable
 {
-    private int _width, _height;
-    private List<Tile> _tiles = new();
+    private readonly int _width;
+    private readonly int _height;
+
+    private readonly List<Tile> _tiles = new();
+
     private float[] _vertices;
-    private int _vao, _vbo;
-    private Texture[] _textures = new Texture[2];
+    private int _vao;
+    private int _vbo;
+
+    private Texture[] _textures;
+
+    private int _vertexCount;
 
     public Tilemap(int width, int height)
     {
         _width = width / 2;
         _height = height / 2;
+
         GenerateTiles();
-        _textures[0] = new Texture(1, 1, 0);
-        _textures[1] = new Texture(1, 1, 1);
         GenerateTileVertices();
         SetupBuffers();
+
+        _textures = new Texture[]
+        {
+            new Texture(1, 1, 0),
+            new Texture(1, 1, 1)
+        };
     }
-    
+
     private void GenerateTiles()
     {
-        Debug.Print("Generating tiles...");
-        for (int y = -(_height); y < _height; y++)
+        for (int y = -_height; y < _height; y++)
         {
-            for (int x = -(_width); x < _width; x++)
+            for (int x = -_width; x < _width; x++)
             {
-                int binVal = Math.Abs((x + y) % 2);
-                _tiles.Add(new Tile(new Vector2(x, y), binVal));
+                int textureIndex = Math.Abs((x + y) % 2);
+                _tiles.Add(new Tile(new Vector2(x, y), new Vector3(50, 100, 150)));
             }
         }
     }
@@ -48,6 +58,7 @@ public class Tilemap
         }
 
         _vertices = vertexList.ToArray();
+        _vertexCount = _vertices.Length / 8; // 8 floats per vertex
     }
 
     private void SetupBuffers()
@@ -56,32 +67,50 @@ public class Tilemap
         _vbo = GL.GenBuffer();
 
         GL.BindVertexArray(_vao);
-        GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
-        GL.BufferData(BufferTarget.ArrayBuffer, _vertices.Length * sizeof(float), _vertices, BufferUsageHint.StaticDraw);
 
-        // Position Attribute (Location = 0)
-        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
+        GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
+        GL.BufferData(
+            BufferTarget.ArrayBuffer,
+            _vertices.Length * sizeof(float),
+            _vertices,
+            BufferUsageHint.StaticDraw
+        );
+
+        int stride = 8 * sizeof(float);
+
+        // Position (vec3)
+        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, stride, 0);
         GL.EnableVertexAttribArray(0);
 
-        // Texture Coordinate Attribute (Location = 1)
-        GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
+        // Color (vec3)
+        GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, stride, 3 * sizeof(float));
         GL.EnableVertexAttribArray(1);
+
+        // UV (vec2)
+        GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, stride, 6 * sizeof(float));
+        GL.EnableVertexAttribArray(2);
+
+        GL.BindVertexArray(0);
     }
 
     public void Render(Renderer renderer)
     {
+        renderer.BindTextures(_textures);
+
         GL.BindVertexArray(_vao);
 
-        foreach (Tile tile in _tiles)
-        {
-            Debug.Print($"Rendering tile {tile.TextureIndex}");
-            _textures[tile.TextureIndex].Bind();  // Bind the correct texture
+        GL.DrawArrays(
+            PrimitiveType.Triangles,
+            0,
+            _vertexCount
+        );
 
-            // Draw only this tile's 6 vertices (not the entire map)
-            GL.DrawArrays(PrimitiveType.Triangles, tile.TextureIndex * 6, 6);
-        }
-    
-        renderer.Render();
+        GL.BindVertexArray(0);
     }
 
+    public void Dispose()
+    {
+        GL.DeleteBuffer(_vbo);
+        GL.DeleteVertexArray(_vao);
+    }
 }

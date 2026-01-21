@@ -1,35 +1,44 @@
 using AthenaEngine.Source.Utility;
 
 namespace AthenaEngine.Source.Terrain;
+
+// Temporary Tile for proof-of-concept
 public class Tile
 {
     public Vector2 Position;
-    public int TextureIndex;
-    public Vector2 UV;
+    public Vector3 Color; // Optional: simple per-tile color
 
-    public Tile(Vector2 position, int textureIndex = 0)
+    private const float HalfSize = 0.5f;
+
+    public Tile(Vector2 position, Vector3 color)
     {
         Position = position;
-        TextureIndex = textureIndex;
-        UV = new Vector2(0, 0); //temporary
+        Color = color;
     }
-    
+
     public float[] GetVertices()
     {
-        float halfSize = 0.5f; // Half tile size to center on position
+        float x = Position.X;
+        float y = Position.Y;
+        float z = 0f;
 
+        // Colors
+        float r = Color.X;
+        float g = Color.Y;
+        float b = Color.Z;
+
+        // Return 6 vertices (two triangles) with 8 floats each
         return new float[]
         {
             // First Triangle
-            Position.X - halfSize, Position.Y - halfSize, 0.0f,  0.0f, 0.0f, 
-            Position.X + halfSize, Position.Y - halfSize, 0.0f,  1.0f, 0.0f, 
-            Position.X + halfSize, Position.Y + halfSize, 0.0f,  1.0f, 1.0f, 
+            x - HalfSize, y - HalfSize, z,   r, g, b,   0f, 0f, // bottom-left
+            x + HalfSize, y - HalfSize, z,   r, g, b,   1f, 0f, // bottom-right
+            x + HalfSize, y + HalfSize, z,   r, g, b,   1f, 1f, // top-right
 
             // Second Triangle
-            Position.X - halfSize, Position.Y - halfSize, 0.0f,  0.0f, 0.0f, 
-            Position.X + halfSize, Position.Y + halfSize, 0.0f,  1.0f, 1.0f, 
-            Position.X - halfSize, Position.Y + halfSize, 0.0f,  0.0f, 1.0f 
+            x - HalfSize, y - HalfSize, z,   r, g, b,   0f, 0f, // bottom-left
+            x + HalfSize, y + HalfSize, z,   r, g, b,   1f, 1f, // top-right
+            x - HalfSize, y + HalfSize, z,   r, g, b,   0f, 1f  // top-left
         };
     }
-
 }

@@ -36,7 +36,7 @@ public class Camera
 
         UpdateCameraVectors();
         
-        Debug.Print("Camera initialized.");
+        Console.WriteLine("Camera initialized.");
     }
 
     private void UpdateCameraVectors()
@@ -82,11 +82,11 @@ public class Camera
         if (IsOrthographic)
         {
             float orthoSize = 30.0f;
-            return Matrix4.CreateOrthographic(orthoSize * AspectRatio, orthoSize, -1.0f, 100.0f);
+            return Matrix4.CreateOrthographic(orthoSize * AspectRatio, orthoSize, 0.1f, 100.0f);
         }
         else
         {
-            return Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(FOV), AspectRatio, -1.0f, 100.0f);
+            return Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(FOV), AspectRatio, 0.1f, 100.0f);
         }
     }
 }

@@ -30,7 +30,7 @@ public class Chunk
                 int tileType = DetermineTileType(worldPos);
                 Vector2 uv = ComputeUV(tileType);
 
-                Tiles[x, y] = new Tile(worldPos, tileType);
+                Tiles[x, y] = new Tile(worldPos, new Vector3(worldPos.X, worldPos.Y, 0));
             }
         }
     }

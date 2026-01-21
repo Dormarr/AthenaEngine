@@ -15,8 +15,11 @@ namespace AthenaEngine.Source
 
         static void Main()
         {
-            _window = new Window(800, 600, "Athena Engine");
-            _window.Run();
+            // _window = new Window(800, 600, "Athena Engine");
+            // _window.Run();
+            
+            using var window = new ProofWindow(800, 600, "Athena Engine");
+            window.Run();
         }
     }
 }

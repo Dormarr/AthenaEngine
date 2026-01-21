@@ -11,8 +11,8 @@ public class Texture
 
     public Texture(int width, int height, int binVal = 0)
     {
-        Handle = GL.GenTexture();
-        GL.BindTexture(TextureTarget.Texture2D, Handle);
+        // Handle = GL.GenTexture();
+        // GL.BindTexture(TextureTarget.Texture2D, Handle);
 
         byte b = (byte)(binVal * 180 + 25);
         
