@@ -1,23 +1,15 @@
 #version 330 core
 
-in vec3 vertexColor;
-in vec2 TexCoord;
+in vec3 vColor;
+in vec2 vTexCoord;
 
 out vec4 FragColor;
 
-flat in int textureIndex;
-
-uniform sampler2D texture0;
-uniform sampler2D texture1;
-//uniform sampler2D textures[2];
-
 void main()
 {
-//     FragColor = texture(textures[textureIndex], TexCoord);
+    // PURE colour proof-of-life
+    FragColor = vec4(vColor, 1.0);
 
-     FragColor = mix(texture(texture0, TexCoord), texture(texture1, TexCoord), 0.5);
-
-     
-//    This just visualises the UV of the primitive
-    FragColor = vec4(TexCoord, 0.0, 1.0);
+    // Optional UV debug:
+    // FragColor = vec4(vTexCoord, 0.0, 1.0);
 }

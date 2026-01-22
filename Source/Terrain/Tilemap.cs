@@ -43,7 +43,9 @@ public class Tilemap : IDisposable
             for (int x = -_width; x < _width; x++)
             {
                 int textureIndex = Math.Abs((x + y) % 2);
-                _tiles.Add(new Tile(new Vector2(x, y), new Vector3(50, 100, 150)));
+                // _tiles.Add(new Tile(new Vector2(x, y), new Vector3(50, 100, 150)));
+                _tiles.Add(new Tile(new Vector2(x, y), (x + y) % 2 == 0 ? new Vector3(1f,1f,1f) : new Vector3(0f,0f,0f)));
+
             }
         }
     }
@@ -95,7 +97,7 @@ public class Tilemap : IDisposable
 
     public void Render(Renderer renderer)
     {
-        renderer.BindTextures(_textures);
+        // renderer.BindTextures(_textures);
 
         GL.BindVertexArray(_vao);
 

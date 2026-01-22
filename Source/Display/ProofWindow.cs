@@ -33,13 +33,13 @@ public class ProofWindow : GameWindow
 
         // --- Camera ---
         _camera = new Camera(
-            new Vector3(0f, 0f, 5f), // pull back so we can see tiles
+            new Vector3(0f, 0f, 1f), // pull back so we can see tiles
             Size.X / (float)Size.Y,
             true
         );
 
         // --- Tilemap ---
-        _tilemap = new Tilemap(16, 16); // small 8x8 grid
+        _tilemap = new Tilemap(16, 16);
     }
 
     protected override void OnRenderFrame(FrameEventArgs args)
